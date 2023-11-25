@@ -6,6 +6,8 @@ class Game:
         pygame.init()
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         pygame.display.set_caption("Zelda")
+        icon = pygame.image.load('graphics/test/player.png')
+        pygame.display.set_icon(icon)
         self.clock = pygame.time.Clock()
         self.level = Level()
     def run(self):
@@ -14,7 +16,7 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-            # self.screen.fill('black')
+            self.screen.fill('black')
             self.level.run()
             pygame.display.update()
             self.clock.tick(FPS)
