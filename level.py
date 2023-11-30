@@ -6,6 +6,7 @@ from debug import debug
 from support import *
 from random import choice
 from weapon import Weapon
+from ui import UI
 class Level:
     def __init__(self):
         self.display_surface = pygame.display.get_surface()
@@ -13,6 +14,7 @@ class Level:
         self.obstacle_sprites = pygame.sprite.Group()
         self.current_attack = None
         self.create_map()
+        self.ui = UI()
     def create_map(self):
         layouts = {
             'boundary': import_csv_layout('map/map_FloorBlocks.csv'),
@@ -47,7 +49,7 @@ class Level:
     def run(self):
         self.visible_sprites.custom_draw(self.player)
         self.visible_sprites.update()
-        debug(self.player.status)
+        self.ui.display(self.player)
 class YSortCameraGroup(pygame.sprite.Group):
     def __init__(self):
         super().__init__()
