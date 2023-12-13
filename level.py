@@ -9,6 +9,7 @@ from weapon import Weapon
 from ui import UI
 from enemy import Enemy
 from particles import AnimationPlayer
+from magic import MagicPlayer
 class Level:
     def __init__(self):
         self.display_surface = pygame.display.get_surface()
@@ -20,6 +21,7 @@ class Level:
         self.create_map()
         self.ui = UI()
         self.animation_player = AnimationPlayer()
+        self.magic_player = MagicPlayer(self.animation_player)
     def create_map(self):
         layouts = {
             'boundary': import_csv_layout('map/map_FloorBlocks.csv'), 'grass': import_csv_layout('map/map_Grass.csv'),
@@ -74,9 +76,10 @@ class Level:
     def create_attack(self):
         self.current_attack = Weapon(self.player, [self.visible_sprites, self.attack_sprites])
     def create_magic(self, style, strength, cost):
-        print(style)
-        print(strength)
-        print(cost)
+        if style == 'heal':
+            self.magic_player.heal(self.player, strength, cost, [self.visible_sprites])
+        if style == 'flame':
+            self.magic_player.flame(self.player, cost, [self.visible_sprites, self.attack_sprites])
     def destroy_attack(self):
         if self.current_attack:
             self.current_attack.kill()
